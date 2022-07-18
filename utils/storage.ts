@@ -24,3 +24,14 @@ export const storeLocalStorageData = async (value:Room) => {
       return undefined
     }
   }
+
+  export const removeLocalDataValue = async () => {
+    try {
+      await AsyncStorage.removeItem('user-room')
+    } catch(e) {
+      // remove error
+      alert(` error removing from local storage ${e}`)
+    }
+  
+    console.log('Done,deleteing ')
+  }

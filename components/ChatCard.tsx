@@ -6,19 +6,20 @@ import { Manager } from "socket.io-client";
 interface Chat { newMessage:{message: string; time: string,user:string }};
 interface ChatCardProps {
   chat: Chat;
+  user: { username: string; room: string;}
 }
 
 
-const ChatCard: React.FC<ChatCardProps> = ({ chat }) => {
-
+const ChatCard: React.FC<ChatCardProps> = ({ chat,user }) => {
+const isMe= chat.newMessage.user === user.username
   return (
     <View style={styles.container}>
 
-      <View style={styles.initials}>
-        <Text 
-        adjustsFontSizeToFit={true}
-         numberOfLines={1}
-        style={styles.initialstext}>
+      <View style={[styles.initials,{backgroundColor:isMe?"black":"white"}]}>
+          <Text 
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+          style={[styles.initialstext,{color:isMe?"white":"black"}]}>
             {chat?.newMessage.user[0]}</Text>
         </View>
 

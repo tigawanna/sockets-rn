@@ -1,5 +1,5 @@
 import { StyleSheet,View} from 'react-native'
-import React, { useState } from 'react';
+import React  from 'react';
 
 import Button from './CustomButton';
 import TextInput from './CustomInput';
@@ -13,11 +13,12 @@ interface Message{
   }
 interface ChatInputProps{
     sendMessage: (message: Message) => void
+ 
     user: { username: string; room: string;}
 }
 
 const ChatInput:React.FC<ChatInputProps> = ({sendMessage,user}) => {
-const [text, setText] = useState('');
+
 const { handleChange, handleSubmit, values } = useFormik({
     initialValues: { message:'' },
     onSubmit: values =>
@@ -46,7 +47,8 @@ export default ChatInput
 const styles = StyleSheet.create({
     container:{
      width:'100%',
-     height:50
+     height:50,
+     marginBottom:20,
 
     },
   inputbutton:{

@@ -1,124 +1,12 @@
 
-import { StyleSheet, Text, View ,FlatList,KeyboardAvoidingView,Platform} from 'react-native'
+import { StyleSheet, Text, View ,FlatList} from 'react-native'
 import React from 'react'
-import { useState } from 'react';
 import ChatCard from './ChatCard';
 import ChatInput from './ChatInput';
+import { Ionicons as Icon } from '@expo/vector-icons';
+import { removeLocalDataValue } from '../utils/storage';
 
-const messagelist=[
-    {
-        "newMessage": {
-            "message": "leo",
-            "time": "14:42:49",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinkskual ",
-            "time": "14:42:43",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinks",
-            "time": "14:42:40",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinks",
-            "time": "14:42:39",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya",
-            "time": "14:42:35",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:28",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:26",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:25",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "leo",
-            "time": "14:42:49",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinkskual ",
-            "time": "14:42:43",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinks",
-            "time": "14:42:40",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya leta drinks",
-            "time": "14:42:39",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad eno mbaya",
-            "time": "14:42:35",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:28",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:26",
-            "user": "goper"
-        }
-    },
-    {
-        "newMessage": {
-            "message": "salad",
-            "time": "14:42:25",
-            "user": "goper"
-        }
-    }
-]
+
 
 interface Message{
     message: string;
@@ -126,23 +14,40 @@ interface Message{
     user: string;
   }
 interface ChatsProps{
-user: { username: string; room: string;}
+room: { users: string; room: string;}
 messages:any
 sendMessage: (message:Message) => void
+setRoom: React.Dispatch<any>
+setUserExists: React.Dispatch<React.SetStateAction<boolean>>
+user: { username: string; room: string;}
+
 }
 
-const Chats:React.FC<ChatsProps> = ({user,messages,sendMessage}) => {
+const Chats:React.FC<ChatsProps> = ({user,room,messages,sendMessage,setUserExists,setRoom}) => {
 
   return (
     <View style={styles.container}>
-      <Text>Chats</Text>
+   <View
+       style={styles.chatinfo}>
+       <Icon name={"ios-exit-outline"} color={'black'} size={30} onPress={()=>{
+        removeLocalDataValue()
+        setUserExists(false)
+        setRoom({room:"",user:""})
+
+       }}/>  
+
+      <Text style={{fontSize:16, fontWeight:'bold'}}>{room?.room}</Text>
+      <Text style={{fontSize:16, fontWeight:'bold'}}>{room?.users}</Text>
+
+       </View>
       <View
        style={styles.flatlist}>
       <FlatList
+      inverted
       keyExtractor={(item, index) => index.toString()}
       data={messages}
       renderItem={({item })=>(
-      <ChatCard chat={item}/>
+      <ChatCard chat={item} user={user}/>
       )}
       />
       </View>
@@ -163,10 +68,17 @@ const styles = StyleSheet.create({
         alignItems:'center',
     
       },
+      chatinfo:{
+      width:"70%",  
+     flexDirection:'row',
+     justifyContent:'space-between',
+     alignItems:'center'
+      },
       flatlist: {
         flex:.9,
         height:"100%",
         width:'100%',
+        marginBottom:20,
         // backgroundColor:"purple",
        
     },

@@ -15,8 +15,10 @@ const JoinRoom: React.FC<JoinRoomProps> = ({setUser,setUserExists}) => {
 const { handleChange, handleSubmit, values } = useFormik({
     initialValues: { username:'',room:'general' },
     onSubmit: values =>{
-     storeLocalStorageData(values)
-     setUser(values)
+      const roomname = values.room.toLowerCase()
+      const room_data = {username:values.username,room:roomname}
+     storeLocalStorageData(room_data)
+     setUser(room_data)
      setUserExists(true)
      
     }
