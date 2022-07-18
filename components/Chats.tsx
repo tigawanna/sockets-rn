@@ -119,12 +119,20 @@ const messagelist=[
         }
     }
 ]
-interface ChatsProps{
 
+interface Message{
+    message: string;
+    time: string;
+    user: string;
+  }
+interface ChatsProps{
+user: { username: string; room: string;}
+messages:any
+sendMessage: (message:Message) => void
 }
 
-const Chats:React.FC<ChatsProps> = () => {
- const [messages, setMessges] = useState(messagelist);
+const Chats:React.FC<ChatsProps> = ({user,messages,sendMessage}) => {
+
   return (
     <View style={styles.container}>
       <Text>Chats</Text>
@@ -138,7 +146,7 @@ const Chats:React.FC<ChatsProps> = () => {
       )}
       />
       </View>
-     <View style={styles.form}><ChatInput/></View>
+     <View style={styles.form}><ChatInput sendMessage={sendMessage} user={user}/></View>
 
     </View>
   )

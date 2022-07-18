@@ -31,7 +31,7 @@ const useChat = (roomId:string) => {
     aUser = localdata
     setUser(aUser)
     setUserExists(true)
-    socketRef.current = socketIOClient(prodUrl, {
+    socketRef.current = socketIOClient(lanUrl, {
       query: { room:aUser.room,user:aUser.username },
         transports: ["websocket"],
         withCredentials: true,
@@ -46,7 +46,7 @@ const useChat = (roomId:string) => {
 
 
 socketRef.current?.on(NEW_MESSAGE_ADDAED, (msg:any) => {
-    // console.log("new message  added==== ",msg)
+    console.log("new message  added==== ",msg)
     setMessages((prev: any) => [msg,...prev]);
   });
 

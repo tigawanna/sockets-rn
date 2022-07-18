@@ -10,7 +10,7 @@ export default function TextInput({ ...otherProps }:any) {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        height: "100%",
+        height: 60,
         width: "80%",
         borderRadius: 4,
         borderColor: validationColor,
@@ -30,6 +30,7 @@ export default function TextInput({ ...otherProps }:any) {
                 borderStyle:'solid',
                 borderRadius:5,
                 padding:5,
+                fontSize:17
               
               }}
           underlineColorAndroid='transparent'

@@ -6,15 +6,19 @@ import TextInput from './CustomInput';
 import { storeLocalStorageData } from './../utils/storage';
 
 interface JoinRoomProps{
-
+  setUser: React.Dispatch<any>
+  setUserExists: React.Dispatch<React.SetStateAction<boolean>>
 }
-const JoinRoom: React.FC<JoinRoomProps> = () => {
+const JoinRoom: React.FC<JoinRoomProps> = ({setUser,setUserExists}) => {
 
 
 const { handleChange, handleSubmit, values } = useFormik({
     initialValues: { username:'',room:'general' },
     onSubmit: values =>{
      storeLocalStorageData(values)
+     setUser(values)
+     setUserExists(true)
+     
     }
 
   })
@@ -24,7 +28,11 @@ const { handleChange, handleSubmit, values } = useFormik({
     <View style={styles.inputbutton}>
    <TextInput onChangeText={handleChange('username')} value={values.username}/>
    <TextInput onChangeText={handleChange('room')} value={values.room}/>
-   <Button onPress={handleSubmit} icon="md-send-outline" />
+   
+   <View style={styles.button}>
+   <Button onPress={handleSubmit} label="JOIN" />
+   </View>
+
    </View>
 </View>
   )
@@ -34,17 +42,22 @@ export default JoinRoom
 
 const styles = StyleSheet.create({
   container:{
+    flex:1,
     width:'100%',
-    height:50
-
+    height:"100%",
+    flexDirection:'column',
    },
  inputbutton:{
  flex:1,
- flexDirection:'row',
+ height:60,
+ flexDirection:'column',
  justifyContent:'center',
  alignItems:'center',
  width:'100%'
+}
+,
+button:{
+marginTop:20
+ }
 
-
-   }
 })

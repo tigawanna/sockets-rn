@@ -2,21 +2,23 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import useChat from './utils/useChat';
 import Chats from './components/Chats';
+import JoinRoom from './components/JoinRoom';
 
 
 export default function App() {
   const {setRoom,user,setUser,room,messages,sendMessage,userExists,setUserExists} = useChat("genaral")
-  console.log("room ==== ",room,userExists)
+  console.log("messages ==== ",messages)
   return (
 
     
     <View style={styles.container}>
-      <View style={styles.status}>
-        <StatusBar style="auto" />
-        </View>
+    <View style={styles.status}>
+    <StatusBar style="auto" />
+    </View>
 
       <View style={styles.chats}>
-      <Chats/>
+      {userExists?<Chats user={user} messages={messages} sendMessage={sendMessage}/>:
+      <JoinRoom setUser={setUser} setUserExists={setUserExists}/>}
       </View>
       </View>
   );

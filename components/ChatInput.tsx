@@ -4,17 +4,27 @@ import React, { useState } from 'react';
 import Button from './CustomButton';
 import TextInput from './CustomInput';
 import { useFormik } from 'formik';
+import { makeTimeStamp } from './../utils/makeTime';
 
+interface Message{
+    message: string;
+    time: string;
+    user: string;
+  }
 interface ChatInputProps{
-
+    sendMessage: (message: Message) => void
+    user: { username: string; room: string;}
 }
 
-const ChatInput:React.FC<ChatInputProps> = () => {
+const ChatInput:React.FC<ChatInputProps> = ({sendMessage,user}) => {
 const [text, setText] = useState('');
 const { handleChange, handleSubmit, values } = useFormik({
     initialValues: { message:'' },
     onSubmit: values =>
-     { alert(`message: ${values.message}`)}
+     { 
+     const new_message={message: values.message, time:makeTimeStamp(),user:user.username}
+    sendMessage(new_message)
+    }
   })
 
   return (
