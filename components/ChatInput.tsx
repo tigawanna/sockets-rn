@@ -1,8 +1,9 @@
-import { StyleSheet,View,KeyboardAvoidingView,Platform,  } from 'react-native'
+import { StyleSheet,View} from 'react-native'
 import React, { useState } from 'react';
-import { Formik } from 'formik';
+
 import Button from './CustomButton';
 import TextInput from './CustomInput';
+import { useFormik } from 'formik';
 
 interface ChatInputProps{
 
@@ -10,26 +11,23 @@ interface ChatInputProps{
 
 const ChatInput:React.FC<ChatInputProps> = () => {
 const [text, setText] = useState('');
+const { handleChange, handleSubmit, values } = useFormik({
+    initialValues: { message:'' },
+    onSubmit: values =>
+     { alert(`message: ${values.message}`)}
+  })
 
   return (
-    <View 
-    style={styles.container}>
-     <Formik
-     initialValues={{ email: '' }}
-     onSubmit={values => console.log(values)}
-   >
-     {({ handleChange, handleBlur, handleSubmit, values }) => (
-       <View style={styles.inputbutton}>
+        <View 
+          style={styles.container}>
+          <View style={styles.inputbutton}>
          <TextInput
-          onChangeText={handleChange('email')}
-           onBlur={handleBlur('email')}
-           value={values.email}
+          onChangeText={handleChange('message')}
+          value={values.message}
          />
          <Button onPress={handleSubmit} icon="md-send-outline" />
        </View>
-     )}
-   </Formik>
-    </View>
+      </View>
   )
 }
 

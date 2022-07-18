@@ -29,6 +29,7 @@ export default function TextInput({ ...otherProps }:any) {
                 borderWidth:2,
                 borderStyle:'solid',
                 borderRadius:5,
+                padding:5,
               
               }}
           underlineColorAndroid='transparent'

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient ,{Socket} from "socket.io-client";
+import { getLocalStorageData } from "./storage";
 
 
 const NEW_MESSAGE_ADDAED = "new_message_added";
@@ -24,26 +25,27 @@ const useChat = (roomId:string) => {
 
   useEffect(() => {
 
-   const user_room= localStorage.getItem("user-room");
-    if(!user_room || user_room === null){
-          // console.log("nothing to see here",user_room)
-       setUser(undefined)
-       setUserExists(false)
-      }else{
-      //@ts-ignore
-      aUser = JSON.parse(user_room); 
-      // console.log("aUser not join on hook load=== ",aUser)
-      setUser(aUser)
-      setUserExists(true)
-      socketRef.current = socketIOClient(prodUrl, {
-        query: { room:aUser.room,user:aUser.username },
-          transports: ["websocket"],
-          withCredentials: true,
-          extraHeaders:{"my-custom-header": "abcd"}
-        })}
+  (async () => {
+  const localdata = await getLocalStorageData()
+  if(localdata){
+    aUser = localdata
+    setUser(aUser)
+    setUserExists(true)
+    socketRef.current = socketIOClient(prodUrl, {
+      query: { room:aUser.room,user:aUser.username },
+        transports: ["websocket"],
+        withCredentials: true,
+        extraHeaders:{"my-custom-header": "abcd"}
+      })
+   }else{
+    setUser(undefined)
+    setUserExists(false)
+   }
+    }
+  )()   
 
 
-   socketRef.current?.on(NEW_MESSAGE_ADDAED, (msg:any) => {
+socketRef.current?.on(NEW_MESSAGE_ADDAED, (msg:any) => {
     // console.log("new message  added==== ",msg)
     setMessages((prev: any) => [msg,...prev]);
   });

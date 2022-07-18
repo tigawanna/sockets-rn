@@ -5,8 +5,8 @@ import Chats from './components/Chats';
 
 
 export default function App() {
-  // const {setRoom,user,setUser,room,messages,sendMessage,userExists,setUserExists} = useChat("genaral")
-  // console.log("room ==== ",room)
+  const {setRoom,user,setUser,room,messages,sendMessage,userExists,setUserExists} = useChat("genaral")
+  console.log("room ==== ",room,userExists)
   return (
 
     
