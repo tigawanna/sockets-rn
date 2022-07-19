@@ -1,14 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import useChat from './utils/useChat';
-import Chats from './components/Chats';
 import JoinRoom from './components/JoinRoom';
+import { useState } from 'react';
+import { getLocalStorageData } from './utils/storage';
+import { useEffect } from 'react';
+import MainChatRoom from './components/MainChatRoom';
 
-const NEW_MESSAGE_ADDAED = "new_message_added";
 
 export default function App() {
-  const {setRoom,user,setUser,room,messages,sendMessage,userExists,setUserExists} = useChat("genaral")
-  // console.log("messages ==== ",messages)
+
+const [userExists, setUserExists] = useState<boolean>(false);
+const [user, setUser] = useState<any>({username:"",room:"general"});
+
+
+
+useEffect(() => {
+  if(user.username !== ""){
+    (async () => {
+      const localdata = await getLocalStorageData()
+      if(localdata){
+        setUser({username:localdata.username , room:localdata.room})
+        setUserExists(true)
+      }
+    })
+  }
+ },[user])
+
+
+
 
 
   return (
@@ -18,11 +37,12 @@ export default function App() {
     </View>
 
       <View style={styles.chats}>
-      {userExists?<Chats room={room} 
-      messages={messages} sendMessage={sendMessage}
-      setUserExists={setUserExists} setRoom ={setRoom} user={user}
-      />:
-      <JoinRoom setUser={setUser} setUserExists={setUserExists}/>}
+      {userExists?<MainChatRoom
+      user={user}
+      userExists={userExists}
+      setUserExists={setUserExists}
+      />
+      :<JoinRoom setUser={setUser} setUserExists={setUserExists}/>}
       </View>
       </View>
   );
@@ -42,6 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     height:'5%',
     width:'100%',
+
   },
   chats: {
    backgroundColor: '#fff',

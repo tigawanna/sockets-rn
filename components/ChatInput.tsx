@@ -21,10 +21,11 @@ const ChatInput:React.FC<ChatInputProps> = ({sendMessage,user}) => {
 
 const { handleChange, handleSubmit, values } = useFormik({
     initialValues: { message:'' },
-    onSubmit: values =>
+    onSubmit: (values,{resetForm}) =>
      { 
      const new_message={message: values.message, time:makeTimeStamp(),user:user.username}
     sendMessage(new_message)
+    resetForm()
     }
   })
 

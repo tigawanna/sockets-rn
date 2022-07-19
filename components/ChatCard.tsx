@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius: 30,
     padding:2,
-    maxWidth:'15%',
+    maxWidth:'10%',
     justifyContent:'center',
     alignItems:'center'
   },
   initialstext: {
-   fontSize:30,
+   fontSize:20,
     marginTop:0,
     // borderColor:'#fb0',
     // borderStyle:'solid',

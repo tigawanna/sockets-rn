@@ -38,7 +38,6 @@ const Chats:React.FC<ChatsProps> = ({user,room,messages,sendMessage,setUserExist
 
       <Text style={{fontSize:16, fontWeight:'bold'}}>{room?.room}</Text>
       <Text style={{fontSize:16, fontWeight:'bold'}}>{room?.users}</Text>
-
        </View>
       <View
        style={styles.flatlist}>
@@ -64,14 +63,16 @@ const styles = StyleSheet.create({
         flex:1,
         width: '100%',
         height:'100%',
-        justifyContent:'space-between',
+        flexDirection:'column',
+        justifyContent:'center',
         alignItems:'center',
+
     
       },
       chatinfo:{
       width:"70%",  
      flexDirection:'row',
-     justifyContent:'space-between',
+     justifyContent:'space-evenly',
      alignItems:'center'
       },
       flatlist: {
