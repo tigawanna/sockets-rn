@@ -28,7 +28,8 @@ const Chats:React.FC<ChatsProps> = () => {
   
   const {room,messages,sendMessage} = useChats(user.user)
   
-  const room_loaded = room.users>0
+  const room_loaded = room.users>0 && user.user.username !== ""
+  
   if(!room_loaded){
     return <Loading/>
   }
