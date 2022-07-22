@@ -1,10 +1,13 @@
 
 import { StyleSheet, Text, View ,FlatList} from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import ChatCard from './ChatCard';
 import ChatInput from './ChatInput';
 import { Ionicons as Icon } from '@expo/vector-icons';
 import { removeLocalDataValue } from '../utils/storage';
+import UserContext from './../utils/context';
+import useChats from './../utils/useChats';
+import Loading from './Loading';
 
 
 
@@ -14,26 +17,29 @@ interface Message{
     user: string;
   }
 interface ChatsProps{
-room: { users: string; room: string;}
-messages:any
-sendMessage: (message:Message) => void
-setRoom: React.Dispatch<any>
-setUserExists: React.Dispatch<React.SetStateAction<boolean>>
-user: { username: string; room: string;}
+
 
 }
 
-const Chats:React.FC<ChatsProps> = ({user,room,messages,sendMessage,setUserExists,setRoom}) => {
+const Chats:React.FC<ChatsProps> = () => {
+
+  const user = useContext(UserContext);
+  // //console.log("Text.tsx  user ==== ",user.user)
+  
+  const {room,messages,sendMessage} = useChats(user.user)
+  
+  const room_loaded = room.users>0
+  if(!room_loaded){
+    return <Loading/>
+  }
 
   return (
     <View style={styles.container}>
-   <View
+     <View
        style={styles.chatinfo}>
        <Icon name={"ios-exit-outline"} color={'black'} size={30} onPress={()=>{
         removeLocalDataValue()
-        setUserExists(false)
-        setRoom({room:"",user:""})
-
+        user.updateUser({username:"",room:""})
        }}/>  
 
       <Text style={{fontSize:16, fontWeight:'bold'}}>{room?.room}</Text>
@@ -46,11 +52,11 @@ const Chats:React.FC<ChatsProps> = ({user,room,messages,sendMessage,setUserExist
       keyExtractor={(item, index) => index.toString()}
       data={messages}
       renderItem={({item })=>(
-      <ChatCard chat={item} user={user}/>
+      <ChatCard chat={item} user={user.user}/>
       )}
       />
       </View>
-     <View style={styles.form}><ChatInput sendMessage={sendMessage} user={user}/></View>
+     <View style={styles.form}><ChatInput sendMessage={sendMessage} user={user.user}/></View>
 
     </View>
   )

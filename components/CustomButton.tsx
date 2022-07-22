@@ -6,28 +6,33 @@ interface ButtonProps{
 label?:string  
 icon?:any  
 onPress?:any
+color?:any
+bgcolor?:any
 }
-export default function Button({ label,icon, onPress }:ButtonProps) {
+export default function Button({ label,icon, onPress,color,bgcolor }:ButtonProps) {
+  const buttontextcolor = color?color:"black"
+  const buttonbg = bgcolor?bgcolor:null
   return (
     <TouchableOpacity
       style={{
         borderRadius: 8,
         height:50,
-        borderColor:'black',
+        borderColor:buttontextcolor,
         borderWidth:label?1:0,
         borderStyle:'solid',
         // width:'10%',
-        paddingHorizontal:15,
+        paddingHorizontal:7,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor:bgcolor
       
       }}
       activeOpacity={0.7}
       onPress={onPress}>
 
-        {label?<Text style={{fontSize:15 , fontWeight:'bold',color:'black'}}>{label}</Text>:
-        icon?<Icon name={icon} color={'black'} size={35}/>:
-         <Text style={{fontSize:15 , fontWeight:'bold',color:'black'}}>Done</Text>}
+        {label?<Text style={{fontSize:15 , fontWeight:'bold',color:buttontextcolor}}>{label}</Text>:
+        icon?<Icon name={icon} color={buttontextcolor} size={35}/>:
+         <Text style={{fontSize:15 , fontWeight:'bold',color:buttontextcolor}}>Done</Text>}
 
     </TouchableOpacity>
   );

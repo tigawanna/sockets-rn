@@ -1,7 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { useCountdownTimer } from 'use-countdown-timer';
 
-const Loading = () => {
+interface LoadingProps{
+
+}
+const Loading:React.FC<LoadingProps> = () => {
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.loadingtext}>Loading....</Text>
@@ -14,13 +20,16 @@ export default Loading
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        height:"100%",
+        width:"100%",
+        position:'relative',
+        zIndex:5,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#19a491'
-
+        backgroundColor:'#55'
     },
     loadingtext:{
-    fontSize:35,
+    fontSize:20,
     
     }
 })

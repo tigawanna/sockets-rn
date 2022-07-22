@@ -4,13 +4,14 @@ import { TextInput as RNTextInput, View, StyleSheet } from 'react-native';
 
 
 export default function TextInput({ ...otherProps }:any) {
-  const validationColor = '#223e4b';
+  const validationColor = otherProps.validationColor?otherProps.validationColor:'#223e4b';
+  const textColor = otherProps.textcolor?otherProps.textcolor:"black"
   return (
     <View
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        height: 60,
+        height: 45,
         width: "80%",
         borderRadius: 4,
         borderColor: validationColor,
@@ -25,12 +26,13 @@ export default function TextInput({ ...otherProps }:any) {
                 alignItems: 'center',
                 height: "100%",
                 width:'100%',
-                borderColor:'black',
+                borderColor:textColor,
                 borderWidth:2,
                 borderStyle:'solid',
                 borderRadius:5,
                 padding:5,
-                fontSize:17
+                fontSize:17,
+                color:textColor
               
               }}
           underlineColorAndroid='transparent'
