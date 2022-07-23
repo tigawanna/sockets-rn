@@ -5,13 +5,15 @@
 ### scripts
 
 For development clone the repo
-```
+```js
 npm install
 expo start to preview
 ```
 
 Works with a simple nodejs backeend [server code](https://github.com/tigawanna/sockets-server)
 
+the linked apk has not been reviewed by google and will give you warnings. also it's a react native app so it's bound to be chonky
 
-Just hop in and chat , messages are broadcast to all the clients currently connected and no data is persisted 
+Just hop in and chat , messages are broadcast to all the clients currently connected and no data is persisted on the server .
+
 
